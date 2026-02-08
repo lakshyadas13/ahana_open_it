@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chocolate Day Surprise for Ahana</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <style>
+    @font-face {
+      font-family: "FF Comma Trial Font";
+      src: url("assets/fonts/FFCommaTrial-Regular.ttf") format("truetype");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    :root {
+      --choco-1: #3b1d0b;
+      --choco-2: #5a2b12;
+      --caramel: #d19a6f;
+      --rose: #f6c2d4;
+      --cream: #fff3e7;
+      --foil: #c7c7d2;
+      --foil-dark: #9ea1ad;
+      --glow: #ffd37a;
+      --mint: #c7ffd1;
+      --pixel: #ffd0e6;
+      --shadow: rgba(35, 14, 6, 0.4);
+      --radius: 18px;
+      --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Press Start 2P", system-ui, -apple-system, sans-serif;
+      color: #2a1408;
+      background: radial-gradient(circle at top, #5d2c17, #3c1a0a 45%, #2a1207 70%),
+        linear-gradient(135deg, #f7c3d4 0%, #d19a6f 50%, #5a2b12 100%);
+      background-blend-mode: screen, normal;
+      overflow-x: hidden;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px 18px 56px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sparkles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(circle, rgba(255, 255, 255, 0.55) 1px, transparent 1px),
+        radial-gradient(circle, rgba(255, 208, 230, 0.6) 1px, transparent 1px),
+        radial-gradient(circle, rgba(255, 244, 210, 0.4) 1px, transparent 1px);
+      background-size: 80px 80px, 120px 120px, 160px 160px;
+      animation: floatSparkles 12s linear infinite;
+      opacity: 0.7;
+    }
+
+    .card {
+      width: min(520px, 94vw);
+      background: rgba(255, 245, 233, 0.88);
+      border-radius: 28px;
+      padding: 28px 22px 30px;
+      box-shadow: 0 26px 60px rgba(27, 10, 4, 0.4);
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      backdrop-filter: blur(6px);
+    }
+
+    .headline {
+      font-family: "Press Start 2P", sans-serif;
+      font-size: clamp(1rem, 3vw, 1.35rem);
+      line-height: 1.5;
+      color: #4b1f0d;
+      margin: 0 0 12px;
+      text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.6);
+    }
+
+    .subline {
+      font-size: clamp(0.85rem, 3vw, 1.05rem);
+      margin: 0 0 18px;
+    }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 24px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #2d1308;
+      background: linear-gradient(135deg, #ffd6a5, #f7b2c8);
+      box-shadow: 0 12px 24px rgba(68, 26, 9, 0.3);
+      cursor: pointer;
+      transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+    }
+
+    .cta:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 16px 30px rgba(68, 26, 9, 0.35);
+    }
+
+    .stage {
+      margin-top: 20px;
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 280px;
+    }
+
+    .wrapper {
+      width: min(420px, 92vw);
+      height: 240px;
+      border-radius: 18px;
+      position: relative;
+      background: linear-gradient(135deg, var(--foil), var(--foil-dark));
+      overflow: hidden;
+      box-shadow: 0 18px 40px rgba(25, 10, 3, 0.4);
+      cursor: pointer;
+      transform-origin: center;
+    }
+
+    .wrapper::before,
+    .wrapper::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.6) 0,
+          rgba(255, 255, 255, 0.6) 6px,
+          rgba(255, 255, 255, 0.25) 6px,
+          rgba(255, 255, 255, 0.25) 12px
+        );
+      mix-blend-mode: soft-light;
+    }
+
+    .wrapper::after {
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.6), transparent 50%),
+        repeating-linear-gradient(
+          0deg,
+          rgba(255, 208, 230, 0.4) 0,
+          rgba(255, 208, 230, 0.4) 4px,
+          transparent 4px,
+          transparent 8px
+        );
+      opacity: 0.5;
+    }
+
+    .wrapper-label {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      font-family: "Press Start 2P", sans-serif;
+      font-size: 0.7rem;
+      color: #4b2b18;
+      text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.6);
+    }
+
+    .unwrap {
+      animation: unwrap 0.9s var(--ease) forwards;
+    }
+
+    .foil-panel {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 55%;
+      background: linear-gradient(135deg, #e5e6ee, #a8acba);
+      box-shadow: inset 0 0 18px rgba(255, 255, 255, 0.5);
+      z-index: 1;
+    }
+
+    .foil-panel.left {
+      left: 0;
+      border-top-right-radius: 18px;
+      border-bottom-right-radius: 18px;
+    }
+
+    .foil-panel.right {
+      right: 0;
+      border-top-left-radius: 18px;
+      border-bottom-left-radius: 18px;
+    }
+
+    .wrapper.unwrap .foil-panel.left {
+      animation: foilLeft 0.9s var(--ease) forwards;
+    }
+
+    .wrapper.unwrap .foil-panel.right {
+      animation: foilRight 0.9s var(--ease) forwards;
+    }
+
+    .bar {
+      width: min(320px, 80vw);
+      height: 420px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, var(--choco-1), var(--choco-2));
+      box-shadow: inset 0 4px 10px rgba(255, 255, 255, 0.1), inset 0 -6px 12px rgba(0, 0, 0, 0.4);
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(6, 1fr);
+      gap: 8px;
+      padding: 10px;
+      opacity: 0;
+      transform: scale(0.9);
+      transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+    }
+
+    .bar.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .piece {
+      background: linear-gradient(135deg, #6b3217, #4a220f);
+      border-radius: 12px;
+      box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.08),
+        inset 0 -4px 6px rgba(0, 0, 0, 0.35);
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+      display: grid;
+      place-items: center;
+      font-weight: 600;
+      font-size: 0.75rem;
+      color: #ffb7e1;
+      text-shadow: 0 0 10px rgba(255, 183, 225, 0.7);
+    }
+
+    .piece-cover {
+      position: absolute;
+      inset: 0;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #6b3217, #4a220f);
+      box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.08),
+        inset 0 -4px 6px rgba(0, 0, 0, 0.35);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .piece-cover::after {
+      content: "";
+      position: absolute;
+      inset: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+    }
+
+    .piece-text {
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(6px) scale(0.98);
+      transition: opacity 0.35s var(--ease), transform 0.35s var(--ease);
+      padding: 0 10px;
+      text-align: center;
+      color: #ffc2e9;
+      text-shadow: 0 0 12px rgba(255, 194, 233, 0.8);
+      font-size: 0.7rem;
+      line-height: 1.35;
+    }
+
+    .piece.broken .piece-text {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .piece.long .piece-text {
+      font-family: "FF Comma Trial Font", "Press Start 2P", sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.2px;
+      text-shadow: none;
+      color: #ff9ed8;
+    }
+
+    .piece:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 0 18px rgba(255, 211, 122, 0.6);
+    }
+
+    .piece.broken {
+      background: linear-gradient(135deg, #3b1908, #2a1308);
+      transform: scale(0.96) rotate(-1deg);
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
+    }
+
+    .piece.broken .piece-cover {
+      animation: shatter 0.4s var(--ease) forwards;
+    }
+
+    .piece.special {
+      border: 2px solid var(--glow);
+      box-shadow: 0 0 16px rgba(255, 211, 122, 0.7);
+    }
+
+    .message-box {
+      margin-top: 18px;
+      min-height: 120px;
+      background: #fff0e4;
+      border-radius: 18px;
+      padding: 18px 16px;
+      box-shadow: inset 0 0 0 2px rgba(251, 206, 171, 0.8);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      font-size: 0.8rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .message {
+      opacity: 0;
+      transform: translateY(10px) scale(0.98);
+      transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+    }
+
+    .message.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .pill-row {
+      margin-top: 14px;
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      border: none;
+      border-radius: 999px;
+      padding: 8px 16px;
+      background: #ffe1cb;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 10px 18px rgba(68, 26, 9, 0.2);
+      transition: transform 0.2s var(--ease);
+    }
+
+    .pill:hover {
+      transform: translateY(-2px);
+    }
+
+    .status {
+      margin-top: 8px;
+      font-size: 0.95rem;
+      color: #5a2b12;
+    }
+
+    .final-screen {
+      position: absolute;
+      inset: 0;
+      background: rgba(40, 16, 7, 0.85);
+      display: grid;
+      place-items: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s var(--ease);
+    }
+
+    .final-screen.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .final-card {
+      background: #fff0e4;
+      border-radius: 22px;
+      padding: 24px 20px;
+      width: min(420px, 88vw);
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(20, 8, 3, 0.5);
+      position: relative;
+    }
+
+    .final-card h2 {
+      margin: 0 0 12px;
+      font-family: "Press Start 2P", "Baloo 2", sans-serif;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #4b1f0d;
+    }
+
+    .final-card p {
+      margin: 0;
+      font-size: 1.05rem;
+    }
+
+    .confetti {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .confetti span {
+      position: absolute;
+      width: 8px;
+      height: 14px;
+      background: var(--pixel);
+      opacity: 0.9;
+      animation: confetti 1.8s var(--ease) infinite;
+    }
+
+    .combo {
+      margin-top: 8px;
+      font-family: "Press Start 2P", sans-serif;
+      font-size: 0.7rem;
+      color: #f7b2c8;
+      text-shadow: 0 0 8px rgba(255, 208, 230, 0.8);
+      opacity: 0;
+      transform: translateY(-6px);
+      transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+    }
+
+    .combo.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .muted {
+      opacity: 0.6;
+    }
+
+    @keyframes unwrap {
+      0% { transform: scale(1); }
+      60% { transform: scale(1.03) rotate(-2deg); }
+      100% { transform: translateY(-30px) scale(0.7) rotate(-12deg); opacity: 0; }
+    }
+
+    @keyframes foilLeft {
+      0% { transform: translateX(0); opacity: 1; }
+      100% { transform: translateX(-120%); opacity: 0; }
+    }
+
+    @keyframes foilRight {
+      0% { transform: translateX(0); opacity: 1; }
+      100% { transform: translateX(120%); opacity: 0; }
+    }
+
+    @keyframes floatSparkles {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-40px); }
+    }
+
+    @keyframes confetti {
+      0% { transform: translateY(-20px) rotate(0deg); opacity: 0; }
+      40% { opacity: 1; }
+      100% { transform: translateY(220px) rotate(180deg); opacity: 0; }
+    }
+
+    @keyframes shatter {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      60% { transform: translateY(6px) rotate(-2deg) scale(0.98); }
+      100% { transform: translateY(18px) rotate(-6deg) scale(0.9); opacity: 0; }
+    }
+
+    @media (min-width: 768px) {
+      .card {
+        padding: 34px 34px 36px;
+      }
+      .wrapper, .bar {
+        height: 460px;
+      }
+      .message-box {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="sparkles"></div>
+    <div class="card">
+      <p class="headline">Hey Ahana…<br />Feels like Chocolate Day, doesn’t it?</p>
+      <p class="subline">🍫✨ A tiny arcade surprise wrapped just for you.</p>
+      <button class="cta" id="unwrapBtn">Tap to unwrap the chocolate</button>
+
+      <div class="stage">
+        <div class="wrapper" id="wrapper" aria-label="Chocolate wrapper">
+          <span class="foil-panel left" aria-hidden="true"></span>
+          <span class="foil-panel right" aria-hidden="true"></span>
+          <div class="wrapper-label">PRESS TO UNWRAP</div>
+        </div>
+        <div class="bar" id="bar" aria-label="Chocolate bar" role="list">
+          <button class="piece" data-index="0" aria-label="Chocolate piece 1"><span class="piece-text"></span><span class="piece-cover" aria-hidden="true"></span></button>
+          <button class="piece" data-index="1" aria-label="Chocolate piece 2"><span class="piece-text"></span><span class="piece-cover" aria-hidden="true"></span></button>
+          <button class="piece" data-index="2" aria-label="Chocolate piece 3"><span class="piece-text"></span><span class="piece-cover" aria-hidden="true"></span></button>
+          <button class="piece" data-index="3" aria-label="Chocolate piece 4"><span class="piece-text"></span><span class="piece-cover" aria-hidden="true"></span></button>
+          <button class="piece long" data-index="4" aria-label="Chocolate piece 5"><span class="piece-text"></span><span class="piece-cover" aria-hidden="true"></span></button>
+          <button class="piece special long" data-index="5" aria-label="Chocolate piece 6"><span class="piece-text"></span><span class="piece-cover" aria-hidden="true"></span></button>
+        </div>
+      </div>
+
+      <div class="message-box">
+        Break the chocolate piece one by one
+      </div>
+
+      <div class="pill-row">
+        <button class="pill" id="replayBtn">Break the chocolate again 🍫</button>
+        <button class="pill" id="soundBtn">Sound: On</button>
+        <button class="pill" id="shareBtn">Share this wish</button>
+      </div>
+      <div class="status" id="status">Pieces broken: 0/6</div>
+      <div class="combo" id="combo">ARCADE COMBO! 💥</div>
+    </div>
+
+    <div class="final-screen" id="finalScreen" aria-hidden="true">
+      <div class="final-card">
+        <div class="confetti" id="confetti"></div>
+        <h2>Happy Chocolate Day, Ahana 🍫</h2>
+        <p>Now go ace those exams.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const unwrapBtn = document.getElementById("unwrapBtn");
+    const wrapper = document.getElementById("wrapper");
+    const bar = document.getElementById("bar");
+    const pieces = Array.from(document.querySelectorAll(".piece"));
+    const replayBtn = document.getElementById("replayBtn");
+    const statusEl = document.getElementById("status");
+    const finalScreen = document.getElementById("finalScreen");
+    const soundBtn = document.getElementById("soundBtn");
+    const confetti = document.getElementById("confetti");
+    const combo = document.getElementById("combo");
+    const shareBtn = document.getElementById("shareBtn");
+
+    const messages = [
+      "all",
+      "the",
+      "best",
+      "ahana",
+      "I don’t know all your subjects yet (dentist life sounds intense 😅) Tell me about them when you’re free. I’d love to know",
+      "You’re going to do so well, you are a superstar"
+    ];
+
+    let unwrapped = false;
+    let brokenCount = 0;
+    let soundEnabled = true;
+    let firstBreakTime = null;
+
+    function playSound(type) {
+      if (!soundEnabled) return;
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const duration = type === "unwrap" ? 0.2 : 0.12;
+      const oscillator = ctx.createOscillator();
+      const gain = ctx.createGain();
+      oscillator.type = type === "unwrap" ? "triangle" : "square";
+      oscillator.frequency.value = type === "unwrap" ? 220 : 440;
+      gain.gain.value = 0.1;
+      oscillator.connect(gain);
+      gain.connect(ctx.destination);
+      oscillator.start();
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+      oscillator.stop(ctx.currentTime + duration);
+    }
+
+    function unwrap() {
+      if (unwrapped) return;
+      unwrapped = true;
+      wrapper.classList.add("unwrap");
+      playSound("unwrap");
+      setTimeout(() => {
+        wrapper.style.display = "none";
+        bar.classList.add("visible");
+        // Text now appears inside each piece
+      }, 500);
+    }
+
+    function createConfetti() {
+      confetti.innerHTML = "";
+      for (let i = 0; i < 18; i += 1) {
+        const bit = document.createElement("span");
+        bit.style.left = `${Math.random() * 100}%`;
+        bit.style.background = i % 2 === 0 ? "#ffd0e6" : "#ffe2b6";
+        bit.style.animationDelay = `${Math.random()}s`;
+        confetti.appendChild(bit);
+      }
+    }
+
+    function checkCombo() {
+      if (firstBreakTime === null) return;
+      const elapsed = Date.now() - firstBreakTime;
+      if (brokenCount === pieces.length && elapsed <= 4000) {
+        combo.classList.add("show");
+        setTimeout(() => combo.classList.remove("show"), 2000);
+      }
+    }
+
+    pieces.forEach((piece) => {
+      piece.addEventListener("click", () => {
+        if (!unwrapped || piece.classList.contains("broken")) return;
+        piece.classList.add("broken");
+        if (brokenCount === 0) firstBreakTime = Date.now();
+        brokenCount += 1;
+        const index = Number(piece.dataset.index);
+        const textEl = piece.querySelector(".piece-text");
+        if (textEl) {
+          textEl.textContent = messages[index];
+        }
+        playSound("snap");
+        statusEl.textContent = `Pieces broken: ${brokenCount}/6`;
+
+        if (brokenCount === pieces.length) {
+          createConfetti();
+          finalScreen.classList.add("show");
+          finalScreen.setAttribute("aria-hidden", "false");
+          checkCombo();
+        }
+      });
+    });
+
+    unwrapBtn.addEventListener("click", unwrap);
+    wrapper.addEventListener("click", unwrap);
+
+    replayBtn.addEventListener("click", () => {
+      brokenCount = 0;
+      firstBreakTime = null;
+      pieces.forEach((piece) => piece.classList.remove("broken"));
+      finalScreen.classList.remove("show");
+      finalScreen.setAttribute("aria-hidden", "true");
+      statusEl.textContent = "Pieces broken: 0/6";
+      pieces.forEach((piece) => {
+        const textEl = piece.querySelector(".piece-text");
+        if (textEl) textEl.textContent = "";
+      });
+      combo.classList.remove("show");
+    });
+
+    soundBtn.addEventListener("click", () => {
+      soundEnabled = !soundEnabled;
+      soundBtn.textContent = `Sound: ${soundEnabled ? "On" : "Off"}`;
+      soundBtn.classList.toggle("muted", !soundEnabled);
+    });
+
+    shareBtn.addEventListener("click", async () => {
+      const text = "Happy Chocolate Day, Ahana! Wishing you the best for your exams!";
+      if (navigator.share) {
+        try {
+          await navigator.share({ title: "Chocolate Day Surprise", text });
+        } catch (err) {
+          // ignore if user cancels
+        }
+      } else {
+        await navigator.clipboard.writeText(text);
+        shareBtn.textContent = "Copied!";
+        setTimeout(() => (shareBtn.textContent = "Share this wish"), 1200);
+      }
+    });
+
+  </script>
+</body>
+</html>
