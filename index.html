@@ -95,23 +95,6 @@
       margin: 0 0 18px;
     }
 
-    .cta {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      border: none;
-      border-radius: 999px;
-      padding: 12px 24px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: #2d1308;
-      background: linear-gradient(135deg, #ffd6a5, #f7b2c8);
-      box-shadow: 0 12px 24px rgba(68, 26, 9, 0.3);
-      cursor: pointer;
-      transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
-    }
-
     .cta:hover {
       transform: translateY(-2px) scale(1.02);
       box-shadow: 0 16px 30px rgba(68, 26, 9, 0.35);
@@ -496,7 +479,7 @@
     <div class="card">
       <p class="headline">Hey Ahana…<br />Feels like Chocolate Day, doesn’t it?</p>
       <p class="subline">🍫✨ A tiny arcade surprise wrapped just for you.</p>
-      <button class="cta" id="unwrapBtn">Tap to unwrap the chocolate</button>
+      <button class="cta" id="unwrapBtn"></button>
 
       <div class="stage">
         <div class="wrapper" id="wrapper" aria-label="Chocolate wrapper">
